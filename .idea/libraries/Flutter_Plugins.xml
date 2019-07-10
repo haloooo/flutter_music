@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Flutter Plugins" type="FlutterPluginsLibraryType">
+    <CLASSES>
+      <root url="file://D:/学习/flutter_windows_v1.5.4-hotfix.2-stable/flutter/.pub-cache/hosted/pub.flutter-io.cn/audioplayers-0.7.8" />
+      <root url="file://D:/学习/flutter_windows_v1.5.4-hotfix.2-stable/flutter/.pub-cache/hosted/pub.flutter-io.cn/path_provider-0.4.1" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
