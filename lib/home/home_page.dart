@@ -5,6 +5,7 @@ import 'package:flutter_netease_music/utils/API.dart';
 import 'package:dio/dio.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_netease_music/player/player_home.dart';
+import 'package:flutter_netease_music/searchSinger/search_singer_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -36,58 +37,78 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: _drawer(),
       appBar: AppBar(
-        backgroundColor: Colors.red,
-        title: Text("首页"),
+        title: Text('首页'),
       ),
       body: RefreshIndicator(
         onRefresh: _onRefresh,
-        child: NestedScrollView(
-            headerSliverBuilder: _sliverBuilder,
-            body: _orderListData.length > 0 ? Center(
-              child: ListView.builder(
-                itemCount: _orderListData.length,
-                itemBuilder: _itemBuilder,
-                controller: _scrollController,
+        child: Column(
+          children: <Widget>[
+            Container(
+              height: 200,
+              child: _bannerData.length > 0 ? Container(
+                child: CarouselSlider(
+                  height: 200.0,
+                  items: _bannerData.map((i) {
+                    return Builder(
+                      builder: (BuildContext context) {
+                        return _orderItem(i);
+                      },
+                    );
+                  }).toList(),
+                ),
+              ) : Container(),
+            ),
+            Container(
+              height: MediaQuery.of(context).size.width,
+              child: _orderListData.length > 0 ? ListView.builder(itemBuilder: _itemBuilder, itemCount: _orderListData.length,): Center(
+                child: Text('没有找到歌曲哦，换个栏目试试吧'),
               ),
-            ) : Center(
-              child: Text('没有找到歌曲哦，换个栏目试试吧'),
             )
+          ],
         ),
       ),
     );
   }
 
-  List<Widget> _sliverBuilder(BuildContext context, bool innerBoxIsScrolled) {
-    return <Widget>[
-      SliverAppBar(
-        //标题居中
-        centerTitle: false,
-        //展开高度200
-        expandedHeight: 200.0,
-        //不随着滑动隐藏标题
-        floating: false,
-        //固定在顶部
-        pinned: false,
-        flexibleSpace: FlexibleSpaceBar(
-          background:
-          _bannerData.length > 0 ? Container(
-//            width: MediaQuery.of(context).size.width,
-            height: 200,
-            child: CarouselSlider(
-              height: 200.0,
-              items: _bannerData.map((i) {
-                return Builder(
-                  builder: (BuildContext context) {
-                    return _orderItem(i);
-                  },
-                );
-              }).toList(),
-            ),
-          ) : Container(),
+  Widget _drawer(){
+    return Drawer(
+      child: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage('assets/drawer.jpeg'),
+              fit: BoxFit.fill
+          ),
         ),
-      )
-    ];
+        child: ListView(
+          children: <Widget>[
+            DrawerHeader(
+              child: Container(
+                child: SizedBox(
+                  width: 60.0,
+                  height: 60.0,
+                  child: CircleAvatar(
+                    child: Text('renjie'),
+                  ),
+                ),
+              ),
+            ),
+            ListTile(
+              onTap: (){
+                Navigator.of(context).push(new MaterialPageRoute(
+                    builder: (context) {
+                      return SearchSingerPage();
+                    }
+                ));
+              },
+              leading: Icon(Icons.settings,color: Colors.white,size: 30,),
+              title: Text('查找歌手', style: TextStyle(color: Colors.white,fontSize: 30),),
+            )
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _itemBuilder(BuildContext context, int index) {

@@ -11,4 +11,7 @@ class GankApi{
   static const String API_GANK_MUSIC_ORDER = 'http://www.mxnzp.com/api/music/order/list'; //获取每日音乐推荐列表
   static const String API_GANK_MUSIC_DETAIL = 'http://www.mxnzp.com/api/music/song/detail?songId='; //根据歌曲id获取歌曲详情
   static const String API_GANK_MUSIC_ORDER_LIST = 'http://www.mxnzp.com/api/music/order/song/list?'; //获取指定榜单的歌曲列表
+  static const String API_GANK_MUSIC_SEARCH_SINGER = 'http://www.mxnzp.com/api/music/singer/search?keyWord='; //搜索歌手信息
+  static const String API_GANK_MUSIC_GET_SINGER_DETAIL = 'http://www.mxnzp.com/api/music/singer/detail?singerId='; //搜索歌手信息
+  static const String API_GANK_MUSIC_GET_SINGER_SONGS = 'http://www.mxnzp.com/api/music/singer/song/list?singerId='; //获取歌手所有的歌曲列表
 }
