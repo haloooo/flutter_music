@@ -38,36 +38,17 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: _drawer(),
-      appBar: AppBar(
-        title: Text('首页'),
-      ),
-      body: RefreshIndicator(
-        onRefresh: _onRefresh,
-        child: Column(
-          children: <Widget>[
-            Container(
-              height: 200,
-              child: _bannerData.length > 0 ? Container(
-                child: CarouselSlider(
-                  height: 200.0,
-                  items: _bannerData.map((i) {
-                    return Builder(
-                      builder: (BuildContext context) {
-                        return _orderItem(i);
-                      },
-                    );
-                  }).toList(),
-                ),
-              ) : Container(),
+      body: _orderListData.length > 0 ? NestedScrollView(
+          headerSliverBuilder: _sliverBuilder,
+          body: Container(
+            alignment: Alignment.topLeft,
+            padding: const EdgeInsets.only(left: 0, top: 0, right: 0, bottom: 5),
+            child: ListView.builder(
+              itemBuilder: _itemBuilder,
+              itemCount: _orderListData.length,
             ),
-            Container(
-              height: MediaQuery.of(context).size.width,
-              child: _orderListData.length > 0 ? ListView.builder(itemBuilder: _itemBuilder, itemCount: _orderListData.length,): Center(
-                child: Text('没有找到歌曲哦，换个栏目试试吧'),
-              ),
-            )
-          ],
-        ),
+          )):Center(
+        child: Text('没有找到对应的歌手信息'),
       ),
     );
   }
@@ -75,23 +56,18 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
   Widget _drawer(){
     return Drawer(
       child: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage('assets/drawer.jpeg'),
-              fit: BoxFit.fill
-          ),
-        ),
         child: ListView(
           children: <Widget>[
             DrawerHeader(
-              child: Container(
-                child: SizedBox(
-                  width: 60.0,
-                  height: 60.0,
-                  child: CircleAvatar(
-                    child: Text('renjie'),
-                  ),
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage('assets/drawer.gif'),
+                    fit: BoxFit.cover
                 ),
+              ),
+              child: Container(
+
+
               ),
             ),
             ListTile(
@@ -102,8 +78,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
                     }
                 ));
               },
-              leading: Icon(Icons.settings,color: Colors.white,size: 30,),
-              title: Text('查找歌手', style: TextStyle(color: Colors.white,fontSize: 30),),
+              leading: Icon(Icons.settings,color: Colors.black26,size: 20,),
+              title: Text('查找歌手', style: TextStyle(color: Colors.black26,fontSize: 20),),
             )
           ],
         ),
@@ -111,8 +87,42 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
     );
   }
 
+  List<Widget> _sliverBuilder(BuildContext context, bool innerBoxIsScrolled) {
+    return <Widget>[
+      SliverAppBar(
+        centerTitle: true,    //标题居中
+        expandedHeight: 200.0,  //展开高度200
+        floating: false,  //不随着滑动隐藏标题
+        pinned: false,    //固定在顶部
+        flexibleSpace: FlexibleSpaceBar(
+          centerTitle: true,
+          background: _bannerData.length > 0 ? Container(
+            child: CarouselSlider(
+              items: _bannerData.map((i) {
+                return Builder(
+                  builder: (BuildContext context) {
+                    return _orderItem(i);
+                  },
+                );
+              }).toList(),
+            ),
+          ) :Center(
+            child: Text('没有找到对应的歌手信息'),
+          ),
+        ),
+      )
+    ];
+  }
+
   Widget _itemBuilder(BuildContext context, int index) {
     return Container(
+        margin: EdgeInsets.only(top: 20, left: 20, right: 10),
+        decoration: BoxDecoration(shape: BoxShape.rectangle, boxShadow: [
+          BoxShadow(color: Colors.grey[300],offset: Offset(1, 1),blurRadius: 1,),
+          BoxShadow(color: Colors.grey[300], offset: Offset(-1, -1), blurRadius: 1),
+          BoxShadow(color: Colors.grey[300], offset: Offset(1, -1), blurRadius: 1),
+          BoxShadow(color: Colors.grey[300], offset: Offset(-1, 1), blurRadius: 1)
+        ]),
       child: GestureDetector(
         onTap: (){
           Navigator.of(context).push(new MaterialPageRoute(
@@ -219,5 +229,4 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
       _loadOrderListData(true);
     });
   }
-
 }

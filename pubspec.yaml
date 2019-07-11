@@ -52,7 +52,9 @@ flutter:
     - assets/pic4.png
     - assets/pic5.png
     - assets/drawer.jpeg
+    - assets/drawer.gif
     - assets/singerHeader.jpeg
+    - assets/welcome.gif
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

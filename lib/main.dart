@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_netease_music/welcome/welcome.dart';
 import 'index/index.dart';
 
 void main() => runApp(MyApp());
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: new Index(),
+      home: WelcomePage(),
     );
   }
 }
