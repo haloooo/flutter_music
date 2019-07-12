@@ -6,6 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_netease_music/player/player_home.dart';
 import 'package:flutter_netease_music/searchSinger/search_singer_page.dart';
+import 'package:flutter_netease_music/picture/picture_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -80,6 +81,17 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
               },
               leading: Icon(Icons.settings,color: Colors.black26,size: 20,),
               title: Text('查找歌手', style: TextStyle(color: Colors.black26,fontSize: 20),),
+            ),
+            ListTile(
+              onTap: (){
+                Navigator.of(context).push(new MaterialPageRoute(
+                    builder: (context) {
+                      return PicturePage();
+                    }
+                ));
+              },
+              leading: Icon(Icons.picture_in_picture,color: Colors.black26,size: 20,),
+              title: Text('美图', style: TextStyle(color: Colors.black26,fontSize: 20),),
             )
           ],
         ),
@@ -116,13 +128,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
 
   Widget _itemBuilder(BuildContext context, int index) {
     return Container(
-        margin: EdgeInsets.only(top: 20, left: 20, right: 10),
-        decoration: BoxDecoration(shape: BoxShape.rectangle, boxShadow: [
-          BoxShadow(color: Colors.grey[300],offset: Offset(1, 1),blurRadius: 1,),
-          BoxShadow(color: Colors.grey[300], offset: Offset(-1, -1), blurRadius: 1),
-          BoxShadow(color: Colors.grey[300], offset: Offset(1, -1), blurRadius: 1),
-          BoxShadow(color: Colors.grey[300], offset: Offset(-1, 1), blurRadius: 1)
-        ]),
+      margin: EdgeInsets.only(top: 20, left: 20, right: 10),
+      decoration: BoxDecoration(shape: BoxShape.rectangle, boxShadow: [
+        BoxShadow(color: Colors.grey[300],offset: Offset(1, 1),blurRadius: 1,),
+        BoxShadow(color: Colors.grey[300], offset: Offset(-1, -1), blurRadius: 1),
+        BoxShadow(color: Colors.grey[300], offset: Offset(1, -1), blurRadius: 1),
+        BoxShadow(color: Colors.grey[300], offset: Offset(-1, 1), blurRadius: 1)
+      ]),
       child: GestureDetector(
         onTap: (){
           Navigator.of(context).push(new MaterialPageRoute(
@@ -132,6 +144,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
           ));
         },
         child: Container(
+
           margin: EdgeInsets.all(20.0),//表示与外部元素的距离是20px
           decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -143,8 +156,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
           child: Row(
             children: <Widget>[
               Container(
-                  height: 100,
-                  width: 100,
+                  height: MediaQuery.of(context).size.width/5,
+                  width: MediaQuery.of(context).size.width/5,
                   margin: EdgeInsets.all(10),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),

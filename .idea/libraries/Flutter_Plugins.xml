@@ -1,8 +1,10 @@
 <component name="libraryTable">
   <library name="Flutter Plugins" type="FlutterPluginsLibraryType">
     <CLASSES>
-      <root url="file://$USER_HOME$/AppData/Roaming/Pub/Cache/hosted/pub.flutter-io.cn/audioplayers-0.7.8" />
-      <root url="file://$USER_HOME$/AppData/Roaming/Pub/Cache/hosted/pub.flutter-io.cn/path_provider-0.4.1" />
+      <root url="file://$PROJECT_DIR$/../../flutter_windows_v1.5.4-hotfix.2-stable/flutter/.pub-cache/hosted/pub.flutter-io.cn/fluttertoast-3.1.0" />
+      <root url="file://$PROJECT_DIR$/../../flutter_windows_v1.5.4-hotfix.2-stable/flutter/.pub-cache/hosted/pub.flutter-io.cn/path_provider-0.4.1" />
+      <root url="file://$PROJECT_DIR$/../../flutter_windows_v1.5.4-hotfix.2-stable/flutter/.pub-cache/hosted/pub.flutter-io.cn/audioplayers-0.7.8" />
+      <root url="file://$PROJECT_DIR$/../../flutter_windows_v1.5.4-hotfix.2-stable/flutter/.pub-cache/hosted/pub.flutter-io.cn/url_launcher-4.2.0+3" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
