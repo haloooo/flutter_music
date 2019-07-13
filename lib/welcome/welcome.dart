@@ -1,5 +1,5 @@
 import 'package:flutter_netease_music/welcome/skip_down_time.dart';
-import 'package:flutter_netease_music/home/home_page.dart';
+import 'package:flutter_netease_music/index/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -34,7 +34,7 @@ class _WelcomePageState extends State<WelcomePage>
     Navigator.pushAndRemoveUntil(context,
         new MaterialPageRoute(
           builder: (BuildContext context) {
-            return new HomePage();
+            return new Index();
           },
         ), (route) => route == null);
   }

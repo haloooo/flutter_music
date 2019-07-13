@@ -30,7 +30,7 @@ ADDED from D:\flutter_music\android\app\src\main\AndroidManifest.xml:8:5-66
 application
 ADDED from D:\flutter_music\android\app\src\main\AndroidManifest.xml:15:5-38:19
 	android:label
-		ADDED from D:\flutter_music\android\app\src\main\AndroidManifest.xml:17:9-46
+		ADDED from D:\flutter_music\android\app\src\main\AndroidManifest.xml:17:9-28
 	android:icon
 		ADDED from D:\flutter_music\android\app\src\main\AndroidManifest.xml:18:9-43
 	android:name
