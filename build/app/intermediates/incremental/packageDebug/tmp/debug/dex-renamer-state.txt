@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-#Fri Jul 12 22:48:44 CST 2019
+#Sun Jul 14 13:31:31 CST 2019
 base.0=D\:\\flutter_music\\build\\app\\intermediates\\transforms\\dexMerger\\debug\\0
-=======
-#Fri Jul 12 16:59:52 CST 2019
-base.0=D\:\\study\\flutter_music\\flutter_music\\build\\app\\intermediates\\transforms\\dexMerger\\debug\\0
->>>>>>> 8fa648f3fd706cd13f0484355d78fb075a1c4eb5
 path.0=classes.dex
 renamed.0=classes.dex

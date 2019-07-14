@@ -1,4 +1,4 @@
-#Thu Jul 11 22:31:21 CST 2019
+#Sun Jul 14 01:20:27 CST 2019
 base.0=D\:\\flutter_music\\build\\app\\intermediates\\transforms\\dexMerger\\release\\0
 path.0=classes.dex
 renamed.0=classes.dex

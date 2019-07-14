@@ -1,5 +1,6 @@
 import 'dart:convert';
-
+import 'package:flutter_netease_music/utils/API.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter_netease_music/picture/entity.dart';
 import 'package:flutter_netease_music/picture/eventbus.dart';
 import 'package:flutter_netease_music/picture/main_card_widget.dart';
@@ -9,6 +10,10 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_netease_music/index/index.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+
+
 
 class PicturePage extends StatelessWidget {
   // This widget is the root of your application.
@@ -30,65 +35,25 @@ class HomePager extends StatefulWidget {
 
 class _HomePagerState extends State<HomePager> {
   List<CardEntity> _cardList;
+  int offset = 2;
 
   List<ToolBarEntity> _toolbarList;
 
   initState() {
     super.initState();
-    _loadJson();
+//    _loadJson();
+    _loadCardData('4e4d610cdf714d2966000000');
+    _loadHeaderData();
+//    var permission =  PermissionHandler().checkPermissionStatus(PermissionGroup.storage);
+//    print("permission status is " + permission.toString());
+//    PermissionHandler().requestPermissions(<PermissionGroup>[
+//      PermissionGroup.storage, // 在这里添加需要的权限
+//    ]);
+
   }
 
   Future<String> _loadAsset() async {
     return await rootBundle.loadString('assets/mock/jk_daily_cards.json');
-  }
-
-  void _loadJson() {
-    _loadAsset().then((json) {
-      JsonDecoder jsonDecoder = new JsonDecoder();
-      Map root = jsonDecoder.convert(json);
-      Map data = root["data"];
-      List cards = data["cards"];
-      if (cards == null) {
-        return;
-      }
-      List<CardEntity> cardEntities = List();
-      for (Map item in cards) {
-        Map originalPost = item["originalPost"];
-        if (originalPost != null) {
-          String content = originalPost["content"];
-          String picUrl;
-          List pictures = originalPost["pictures"];
-          if (pictures != null && pictures.length > 0) {
-            Map pic = pictures[0];
-            if (pic != null) {
-              picUrl = pic["middlePicUrl"];
-            }
-          }
-          if (content != null && picUrl != null) {
-            cardEntities.add(CardEntity(picUrl, content));
-          }
-        }
-      }
-
-      List toolbarList = data["toolbarItems"];
-      if (toolbarList == null) {
-        return;
-      }
-      List<ToolBarEntity> toolbarEntities = List();
-      for (Map item in toolbarList) {
-        String url = item["url"];
-        String picUrl = item["picUrl"];
-        String title = item["title"];
-        if (title != null && picUrl != null) {
-          toolbarEntities.add(ToolBarEntity(picUrl, title, url));
-        }
-      }
-
-      setState(() {
-        _cardList = cardEntities;
-        _toolbarList = toolbarEntities;
-      });
-    });
   }
 
   @override
@@ -105,7 +70,7 @@ class _HomePagerState extends State<HomePager> {
   }
 
   _onHeaderItemClick(ToolBarEntity item) {
-    Fluttertoast.showToast(msg: item.title);
+    Fluttertoast.showToast(msg: item.name);
   }
 
   Widget _createHeader() {
@@ -113,43 +78,57 @@ class _HomePagerState extends State<HomePager> {
     if (_toolbarList == null || _toolbarList.length == 0) {
       header = Text("Loading...");
     } else {
-      header = Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: _toolbarList.map<Widget>((item) {
-            return Expanded(
-                child: GestureDetector(
-                    behavior: HitTestBehavior.translucent,
-                    onTap: () {
-                      _onHeaderItemClick(item);
-                    },
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        ClipOval(
-                          child: FadeInImage.memoryNetwork(
-                              image: item.picUrl,
-                              placeholder: kTransparentImage,
-                              width: 62,
-                              height: 62),
-                        ),
-                        Container(
-                          height: 6,
-                        ),
-                        Text(
-                          item.title,
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Color(0xff333333),
-                          ),
-                        )
-                      ],
-                    )));
-          }).toList());
+      header = CarouselSlider(
+        items: _toolbarList.map((i) {
+          return Builder(
+            builder: (BuildContext context) {
+              return _orderItem(i);
+            },
+          );
+        }).toList(),
+      );
     }
 
     return Container(
         padding: EdgeInsets.only(left: 10, right: 10), child: header);
+  }
+
+  Widget _orderItem(i){
+    return GestureDetector(
+        onTap: (){
+          _loadNextCardData(i.id);
+        },
+        child: Container(
+          margin: EdgeInsets.only(left: 10, right: 10),
+          child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Stack(
+                  fit: StackFit.expand,
+                  children: <Widget>[
+                    Image.network(
+                      i.cover,
+                      fit: BoxFit.cover,
+                    ),
+                    Container(color: const Color(0x5a000000)),
+                    Container(
+                      margin: EdgeInsets.all(20),
+                      alignment: Alignment.center,
+                      child: Text(
+                        i.name,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            letterSpacing: 2,
+                            fontSize: 22,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),
+                        maxLines: 4,
+                      ),
+                    )
+                  ]
+              )
+          ),
+        )
+    );
   }
 
   Widget _createContent() {
@@ -174,8 +153,6 @@ class _HomePagerState extends State<HomePager> {
               )),
           CardStackWidget(
             cardList: _cardList,
-            offset: 8,
-            cardCount: 2,
           )
         ],
       );
@@ -186,12 +163,18 @@ class _HomePagerState extends State<HomePager> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
+//        _createMenu("assets/drawable/ic_discover_next_card_back.png",
+//                () => Fluttertoast.showToast(msg: "coming soon...😂😂")),
         _createMenu("assets/drawable/ic_discover_next_card_back.png",
-                () => Fluttertoast.showToast(msg: "coming soon...😂😂")),
+                () => Navigator.of(context).push(new MaterialPageRoute(
+                builder: (context) {
+                  return Index();
+                }
+            ))),
         _createMenu("assets/drawable/ic_discover_more.png",
                 () => bus.emit("openCard", true)),
-        _createMenu("assets/drawable/ic_discover_next_card_right.png",
-            _showAboutDialog),
+//        _createMenu("assets/drawable/ic_discover_next_card_right.png",
+//                ()=>_loadNextCardData('1')),
       ],
     );
   }
@@ -236,5 +219,78 @@ class _HomePagerState extends State<HomePager> {
                   width: 48,
                   height: 48,
                 ))));
+  }
+
+  _loadCardData(id) async{
+    List<CardEntity> cardEntities = List();
+    Dio dio = new Dio();
+    Response response=await dio.get(GankApi.API_GANK_PICTURE_TYPE + '/' + id + '/vertical?limit=100000');
+    if(response.statusCode == 200 && response.data['msg'] == "success"){
+      setState(() {
+        List dataList = response.data['res']['vertical'];
+        for (Map item in dataList) {
+          int views = item["views"];
+          int ncos = item["ncos"];
+          int rank = item["rank"];
+          List tag = item["tag"];
+          String wp = item["wp"];
+          bool xr = item["xr"];
+          bool cr = item["cr"];
+          int favs = item["favs"];
+          double atime = item["atime"];
+          String id = item["id"];
+          String desc = item["desc"];
+          String thumb = item["thumb"];
+          String img = item["img"];
+          List cid = item["cid"];
+          List url = item["url"];
+          String rule = item["rule"];
+          String preview = item["preview"];
+          String store = item["store"];
+          if (url != null) {
+            cardEntities.add(CardEntity(views, ncos, rank, tag, wp, xr, cr,
+                favs, atime, id, desc, thumb, img,
+                cid, url, rule, preview, store));
+          }
+        }
+        _cardList = cardEntities;
+      });
+    }
+  }
+
+  _loadHeaderData() async{
+    List<ToolBarEntity> toolBarEntities = List();
+    Dio dio = new Dio();
+    Response response=await dio.get(GankApi.API_GANK_PICTURE_TYPE);
+    if(response.statusCode == 200 && response.data['msg'] == "success"){
+      setState(() {
+        List dataList = response.data['res']['category'];
+        for (Map item in dataList) {
+          int count = item["count"];
+          String ename = item["ename"];
+          String rname = item["rname"];
+          String cover_temp = item["cover_temp"];
+          String name = item["name"];
+          String cover = item["cover"];
+          int rank = item["rank"];
+          List filter = item["filter"];
+          int sn = item["sn"];
+          String icover = item["icover"];
+          double atime = item["atime"];
+          int type = item["type"];
+          String id = item["id"];
+          String picasso_cover = item["picasso_cover"];
+          toolBarEntities.add(ToolBarEntity(count, ename, rname, cover_temp, name, cover, rank, filter, sn, icover, atime, type, id, picasso_cover));
+        }
+        _toolbarList = toolBarEntities;
+      });
+    }
+  }
+
+  Future<Null> _loadNextCardData(id) async {
+    setState(() {
+      offset += 1;
+      _loadCardData(id);
+    });
   }
 }

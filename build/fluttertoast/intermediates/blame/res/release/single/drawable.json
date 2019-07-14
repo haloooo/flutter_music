@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "D:\\flutter_music\\build\\fluttertoast\\intermediates\\res\\merged\\release\\drawable\\toast_bg.xml",
+        "source": "C:\\Users\\Administrator\\AppData\\Roaming\\Pub\\Cache\\hosted\\pub.flutter-io.cn\\fluttertoast-3.1.0\\android\\src\\main\\res\\drawable\\toast_bg.xml"
+    },
+    {
+        "merged": "D:\\flutter_music\\build\\fluttertoast\\intermediates\\res\\merged\\release\\drawable\\notification_icon_background.xml",
+        "source": "C:\\Users\\Administrator\\.gradle\\caches\\transforms-1\\files-1.1\\core-1.0.2.aar\\71f3aaf5497578c2e474b508e78e8924\\res\\drawable\\notification_icon_background.xml"
+    },
+    {
+        "merged": "D:\\flutter_music\\build\\fluttertoast\\intermediates\\res\\merged\\release\\drawable\\notification_bg.xml",
+        "source": "C:\\Users\\Administrator\\.gradle\\caches\\transforms-1\\files-1.1\\core-1.0.2.aar\\71f3aaf5497578c2e474b508e78e8924\\res\\drawable\\notification_bg.xml"
+    },
+    {
+        "merged": "D:\\flutter_music\\build\\fluttertoast\\intermediates\\res\\merged\\release\\drawable\\notification_bg_low.xml",
+        "source": "C:\\Users\\Administrator\\.gradle\\caches\\transforms-1\\files-1.1\\core-1.0.2.aar\\71f3aaf5497578c2e474b508e78e8924\\res\\drawable\\notification_bg_low.xml"
+    },
+    {
+        "merged": "D:\\flutter_music\\build\\fluttertoast\\intermediates\\res\\merged\\release\\drawable\\notification_tile_bg.xml",
+        "source": "C:\\Users\\Administrator\\.gradle\\caches\\transforms-1\\files-1.1\\core-1.0.2.aar\\71f3aaf5497578c2e474b508e78e8924\\res\\drawable\\notification_tile_bg.xml"
+    }
+]

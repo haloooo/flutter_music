@@ -7,6 +7,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_netease_music/player/player_home.dart';
 import 'package:flutter_netease_music/searchSinger/search_singer_page.dart';
 import 'package:flutter_netease_music/picture/picture_page.dart';
+import 'package:flutter_netease_music/eyeopen/eyeopen.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -92,7 +93,18 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
               },
               leading: Icon(Icons.picture_in_picture,color: Colors.black26,size: 20,),
               title: Text('美图', style: TextStyle(color: Colors.black26,fontSize: 20),),
-            )
+            ),
+            ListTile(
+              onTap: (){
+                Navigator.of(context).push(new MaterialPageRoute(
+                    builder: (context) {
+                      return EyeOpen();
+                    }
+                ));
+              },
+              leading: Icon(Icons.add_a_photo,color: Colors.black26,size: 20,),
+              title: Text('开眼', style: TextStyle(color: Colors.black26,fontSize: 20),),
+            ),
           ],
         ),
       ),
@@ -144,42 +156,25 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
           ));
         },
         child: Container(
-
-          margin: EdgeInsets.all(20.0),//表示与外部元素的距离是20px
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment(0.9, 0.0), // 10% of the width, so there are ten blinds.
-                colors: [const Color(0xFFFFFFEE), const Color(0xFF999999)], // whitish to gray
-                tileMode: TileMode.repeated, // repeats the gradient over the canvas
-              )),
           child: Row(
             children: <Widget>[
-              Container(
-                  height: MediaQuery.of(context).size.width/5,
-                  width: MediaQuery.of(context).size.width/5,
-                  margin: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      image: DecorationImage(
-                        image: NetworkImage(_orderListData[index]['pic_small']),
-                        fit: BoxFit.cover,
-                      )
-                  )
-              ),
               Column(
                 children: <Widget>[
                   Container(
-                    width: MediaQuery.of(context).size.width/2,
-                    margin: EdgeInsets.only(top: 20,left: 10),
+                    width: MediaQuery.of(context).size.width/1.8,
+                    margin: EdgeInsets.only(top: 20,left: 40),
                     child: Text(_orderListData[index]['title'], style: new TextStyle(fontWeight: FontWeight.w700),),
                   ),
                   Container(
                     width: MediaQuery.of(context).size.width/3,
-                    padding: EdgeInsets.only(top: 10,left: 60),
+                    padding: EdgeInsets.only(top: 10,left: 40),
                     child: Text(_orderListData[index]['author']),
                   )
                 ],
+              ),
+              Expanded(
+
+                  child: Image.network(_orderListData[index]['pic_small'])
               )
             ],
           ),

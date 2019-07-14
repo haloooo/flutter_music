@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_netease_music/searchSinger/show_singer_page.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class SearchSingerPage extends StatefulWidget {
   @override
@@ -42,12 +43,7 @@ class _SearchSingerPageState extends State<SearchSingerPage> {
                         icon: Icon(Icons.search),
                         onPressed: (){
                           if(_textEditingController.text == ''){
-                            showDialog(
-                                context: context,
-                                builder: (context) => AlertDialog(
-                                  title: Text('请先输入歌手名'),
-                                )
-                            );
+                            Fluttertoast.showToast(msg: "请先输入歌手名😂😂");
                           }else{
                             Navigator.of(context).push(new MaterialPageRoute(
                                 builder: (context) {

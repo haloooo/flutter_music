@@ -1,11 +1,16 @@
 import 'dart:math';
-
+import 'package:flutter/services.dart';
 import 'package:flutter_netease_music/picture/entity.dart';
 import 'package:flutter_netease_music/picture/orntdrag.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
+
+
+
+
 
 class CardStackWidget extends StatefulWidget {
   final List<CardEntity> cardList;
@@ -17,9 +22,9 @@ class CardStackWidget extends StatefulWidget {
   const CardStackWidget(
       {Key key,
         this.cardList,
-        this.cardCount = 2,
-        this.offset = 10,
-        this.cardPadding = const EdgeInsets.only(left: 20, right: 20, top: 60)})
+        this.cardCount = 3,
+        this.offset = 5,
+        this.cardPadding = const EdgeInsets.only(left: 10, right: 20, top: 60)})
       : assert(cardPadding != null),
         assert(cardCount != null),
         assert(offset != null),
@@ -60,9 +65,20 @@ class _CardStackWidgetState extends State<CardStackWidget>
     super.initState();
   }
 
-  _onCardTap() {
+  _onCardTap() async{
     if (widget.cardList != null && widget.cardList.length > 0) {
-      Fluttertoast.showToast(msg: widget.cardList[0].text);
+
+//      ByteData bytes = await rootBundle.load('assets/pic1.png');
+//      final result = await ImageGallerySaver.save(bytes.buffer.asUint8List());
+//      print(result);   //这个返回值 在保存成功后会返回true
+//      if(result){
+//        Fluttertoast.showToast(msg: '保存成功', fontSize: 14,gravity: ToastGravity.CENTER,timeInSecForIos: 1,textColor: Colors.white,);
+//      }else{
+//        Fluttertoast.showToast(msg: '保存失败', fontSize: 14,gravity: ToastGravity.CENTER,timeInSecForIos: 1,textColor: Colors.white,);
+//      }
+//
+//
+//      Fluttertoast.showToast(msg: widget.cardList[0].atime.toString());
     }
   }
 
@@ -223,24 +239,24 @@ class _CardWidget extends StatelessWidget {
               fit: StackFit.expand,
               children: <Widget>[
                 Image.network(
-                  cardEntity.picUrl,
+                  cardEntity.thumb,
                   fit: BoxFit.cover,
                 ),
                 Container(color: const Color(0x5a000000)),
-                Container(
-                  margin: EdgeInsets.all(20),
-                  alignment: Alignment.center,
-                  child: Text(
-                    cardEntity.text,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        letterSpacing: 2,
-                        fontSize: 22,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold),
-                    maxLines: 4,
-                  ),
-                )
+//                Container(
+//                  margin: EdgeInsets.all(20),
+//                  alignment: Alignment.center,
+//                  child: Text(
+//                    cardEntity.type,
+//                    textAlign: TextAlign.center,
+//                    style: TextStyle(
+//                        letterSpacing: 2,
+//                        fontSize: 22,
+//                        color: Colors.white,
+//                        fontWeight: FontWeight.bold),
+//                    maxLines: 4,
+//                  ),
+//                )
               ],
             ),
           )),

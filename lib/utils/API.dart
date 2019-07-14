@@ -14,4 +14,7 @@ class GankApi{
   static const String API_GANK_MUSIC_SEARCH_SINGER = 'http://www.mxnzp.com/api/music/singer/search?keyWord='; //搜索歌手信息
   static const String API_GANK_MUSIC_GET_SINGER_DETAIL = 'http://www.mxnzp.com/api/music/singer/detail?singerId='; //搜索歌手信息
   static const String API_GANK_MUSIC_GET_SINGER_SONGS = 'http://www.mxnzp.com/api/music/singer/song/list?singerId='; //获取歌手所有的歌曲列表
+  static const String API_GANK_PICTURE_MEITU = 'https://www.apiopen.top/meituApi?page='; //美图获取接口
+  static const String API_GANK_PICTURE_TYPE = 'http://service.picasso.adesk.com/v1/vertical/category'; //获取手机壁纸类别
+  static const String API_EYEOPEN_CATEGPRIES = 'http://baobab.kaiyanapp.com/api/v4/categories'; //分类
 }
